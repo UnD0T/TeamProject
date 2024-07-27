@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(128), unique=True, index=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(128))
     is_admin: so.Mapped[bool] = so.mapped_column(default=False)
+    # is_seller: so.Mapped[bool] #можна буде зробити вибір при реєстрації: продавець/покупець
     user_products: so.WriteOnlyMapped['Products'] = so.relationship('Products', secondary=user_product, back_populates='users')
 
     def set_password(self, password):
@@ -46,4 +47,5 @@ class Products(db.Model):
 
     def __repr__(self):
         return f'Tour: {self.title}'
+
 
