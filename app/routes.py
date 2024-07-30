@@ -4,14 +4,14 @@ from flask_login import login_required, login_user, logout_user, current_user
 import sqlalchemy as sa
 import sqlalchemy.orm as os
 
-from app.models import User, Products
-from forms import RegistrationForm, LoginForm, ShopForm
-from decorators import logout_required
+from .models import User, Products
+from .forms import RegistrationForm, LoginForm, ShopForm
+from .decorators import admin_required
 
 
 @app.route('/')
 def home():
-    products = db.session.scalars(sa.select(Products))
+    # products = db.session.scalars(sa.select(Products))
     return render_template('home.html', products=products)
 
 
@@ -58,7 +58,6 @@ def buy_products(product_id):
 # registration/login/logout
 
 @app.route('/registration', methods=['GET', 'POST'])
-@logout_required
 def registration():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -75,8 +74,7 @@ def registration():
     return render_template('register.html', form=form)
 
 
-@app.route('login', methods=['GET', 'POST'])
-@logout_required
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -99,4 +97,4 @@ def logout():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.hmtl')
+    return render_template('profile.html')
