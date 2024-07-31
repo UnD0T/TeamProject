@@ -13,7 +13,7 @@ class ShopForm(FlaskForm):
     seller = StringField('Seller name', validators=[DataRequired()])
     price = FloatField('Product price', validators=[DataRequired()])
     # time = DateTimeField('Time', format='%Y.%m.%d %H:%M', validators=[DataRequired()])
-    submit = SubmitField('post')
+    submit = SubmitField('Post')
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
