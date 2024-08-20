@@ -20,6 +20,10 @@ def products():
     products = db.session.scalars(sa.select(Products))
     return render_template('products.html', products=products)
 
+@app.route('/products/<int:id>')
+def product_detail(id):
+    # product = db.session.scalar(sa.select(Products).where(Products.id == id))
+    return render_template('product_detail.html') #product=product
 
 # post_products
 @app.route('/products/post', methods=['GET', 'POST'])

@@ -46,6 +46,6 @@ class Products(db.Model):
     users: so.WriteOnlyMapped[User] = so.relationship('User', secondary=user_product, back_populates='user_products')
 
     def __repr__(self):
-        return f'Tour: {self.title}'
+        return f'Products: {self.title}'
 
 
