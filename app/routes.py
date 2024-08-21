@@ -12,11 +12,11 @@ from .decorators import admin_required
 @app.route('/')
 def home():
     # products = db.session.scalars(sa.select(Products))
-    return render_template('home.html', products=products)
+    return render_template('index.html', )#products=products
 
 
 @app.route('/products')
-def products():
+def products_list():
     products = db.session.scalars(sa.select(Products))
     return render_template('products.html', products=products)
 

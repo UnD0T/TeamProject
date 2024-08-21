@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container w-25 mt-3">
+<h1>PRODUCTS YOU CAN BUY</h1>
+
+{% for product in products %}
+<p> {{ product }} <a href="{{ url_for('buy_products', product_id=product.id) }}">BUY</a></p>
+{% endfor %}
+</div>
+{% endblock %}
