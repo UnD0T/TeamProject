@@ -8,7 +8,7 @@ from string import punctuation
 
 
 class ShopForm(FlaskForm):
-    name = StringField('Product name', validators=[DataRequired()])
+    title = StringField('Product name', validators=[DataRequired()])
     description = TextAreaField('Proudct description', validators=[DataRequired()])
     seller = StringField('Seller name', validators=[DataRequired()])
     price = FloatField('Product price', validators=[DataRequired()])
