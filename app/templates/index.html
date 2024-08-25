@@ -5,6 +5,7 @@
 <h1>PRODUCTS YOU CAN BUY</h1>
 
 {% for product in products %}
+<img src="{{ product.photo }}" alt="">
 <p><a href="{{ url_for('product_detail', product_id=product.id) }}"> {{ product }} </a><a href="{{ url_for('buy_products', product_id=product.id) }}">BUY</a></p>
 {% endfor %}
 </div>

@@ -29,7 +29,9 @@ def product_detail(product_id):
 @app.route('/products/post', methods=['GET', 'POST'])
 def post_products():
     form=ShopForm()
+    print('endpoint')
     if form.validate_on_submit():
+        print('validate_on_submit')
         new_product=Products(
             # seller=current_user,  # мені здається що продавця можна і без форми записати
             title=form.title.data,
@@ -37,6 +39,8 @@ def post_products():
             seller=form.seller.data,
             price=form.price.data
         )
+        print('new product')
+        new_product.set_photo_path(form.photo.data) #чомусь у form.photo.data повертається none і тому валідація не проходить
 
         db.session.add(new_product)
         db.session.commit()
@@ -103,4 +107,5 @@ def logout():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    products = db.session.scalars(sa.select(Products))
+    return render_template('profile.html', products=products)

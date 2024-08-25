@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, FloatField, DateTimeField, PasswordField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app import db
 import sqlalchemy as sa
@@ -10,6 +11,7 @@ from string import punctuation
 class ShopForm(FlaskForm):
     title = StringField('Product name', validators=[DataRequired()])
     description = TextAreaField('Proudct description', validators=[DataRequired()])
+    photo = FileField('photo', validators=[FileRequired(), FileAllowed(['jpg', 'png'])])
     seller = StringField('Seller name', validators=[DataRequired()])
     price = FloatField('Product price', validators=[DataRequired()])
     # time = DateTimeField('Time', format='%Y.%m.%d %H:%M', validators=[DataRequired()])

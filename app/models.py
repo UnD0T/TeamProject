@@ -1,11 +1,16 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from werkzeug.utils import secure_filename
 
 from app import db, login
+import app
+from config import Config
 import sqlalchemy as sa
 import sqlalchemy.orm as so
+
 from typing import Optional
+from datetime import datetime
+import os
 
 user_product = sa.Table(
     'user_product',
@@ -40,6 +45,7 @@ class Products(db.Model):
     id: so.MappedColumn[int] = so.mapped_column(primary_key=True)
     title: so.MappedColumn[str] = so.mapped_column(sa.String(60))
     description: so.MappedColumn[str]
+    photo: so.MappedColumn[str]
     seller: so.MappedColumn[str] = so.mapped_column(sa.String(60))
     # time: so.Mapped[datetime] = so.mapped_column(default=lambda: datetime.now())
     price: so.MappedColumn[float]
@@ -48,4 +54,14 @@ class Products(db.Model):
     def __repr__(self):
         return f'Products: {self.title}'
 
+
+    def set_photo_path(self, data_in_form):
+        print('set_path')
+        filename = secure_filename(data_in_form.filename)
+        products_path = os.path.join(app.Config['UPLOAD_PATH'], filename)
+        data_in_form.save(products_path)
+        self.photo = products_path
+        path_list = products_path.split('/')[1:]
+        new_path = '/'.join(path_list)
+        self.photo = new_path
 
