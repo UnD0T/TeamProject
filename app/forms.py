@@ -11,7 +11,7 @@ from string import punctuation
 class ShopForm(FlaskForm):
     title = StringField('Product name', validators=[DataRequired()])
     description = TextAreaField('Proudct description', validators=[DataRequired()])
-    photo = FileField('photo', validators=[FileRequired(), FileAllowed(['jpg', 'png'])])
+    photo = FileField('Photo', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     seller = StringField('Seller name', validators=[DataRequired()])
     price = FloatField('Product price', validators=[DataRequired()])
     # time = DateTimeField('Time', format='%Y.%m.%d %H:%M', validators=[DataRequired()])

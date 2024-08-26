@@ -2,9 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
-from app import db, login
-import app
-from config import Config
+from app import db, login, app
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
@@ -58,7 +56,7 @@ class Products(db.Model):
     def set_photo_path(self, data_in_form):
         print('set_path')
         filename = secure_filename(data_in_form.filename)
-        products_path = os.path.join(app.Config['UPLOAD_PATH'], filename)
+        products_path = os.path.join(app.config['UPLOAD_PATH'], filename)
         data_in_form.save(products_path)
         self.photo = products_path
         path_list = products_path.split('/')[1:]

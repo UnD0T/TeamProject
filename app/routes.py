@@ -1,6 +1,7 @@
 from app import app, db #login  
 from flask import render_template, url_for, request, redirect
 from flask_login import login_required, login_user, logout_user, current_user
+from werkzeug.utils import secure_filename
 import sqlalchemy as sa
 import sqlalchemy.orm as os
 
@@ -30,7 +31,7 @@ def product_detail(product_id):
 def post_products():
     form=ShopForm()
     print('endpoint')
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #чомусь у form.photo.data повертається none і тому валідація не проходить
         print('validate_on_submit')
         new_product=Products(
             # seller=current_user,  # мені здається що продавця можна і без форми записати
@@ -40,7 +41,18 @@ def post_products():
             price=form.price.data
         )
         print('new product')
-        new_product.set_photo_path(form.photo.data) #чомусь у form.photo.data повертається none і тому валідація не проходить
+        new_product.set_photo_path(form.photo.data) 
+
+        
+        # uploaded_file = form.photo.data
+        # filename = secure_filename(uploaded_file.filename)
+        # post_path = os.path.join(app.config['UPLOAD_PATH'], filename)
+        # uploaded_file.save(post_path)
+        # new_product.photo = post_path
+        # path_list = new_product.photo.split('/')[1:]
+        # new_path = '/'.join(path_list)
+
+        # new_product.photo = new_path
 
         db.session.add(new_product)
         db.session.commit()
