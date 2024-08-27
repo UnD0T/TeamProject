@@ -21,6 +21,7 @@ class User(UserMixin, db.Model):
     is_admin: so.Mapped[bool] = so.mapped_column(default=False)
     # is_seller: so.Mapped[bool] #можна буде зробити вибір при реєстрації: продавець/покупець
     user_products: so.WriteOnlyMapped['Products'] = so.relationship('Products', secondary=user_product, back_populates='users')
+    sell_products: so.WriteOnlyMapped['Products'] = so.relationship(back_populates='seller')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -40,7 +41,8 @@ class Products(db.Model):
     id: so.MappedColumn[int] = so.mapped_column(primary_key=True)
     title: so.MappedColumn[str] = so.mapped_column(sa.String(60))
     description: so.MappedColumn[str]
-    seller: so.MappedColumn[str] = so.mapped_column(sa.String(60))
+    seller_id: so.MappedColumn[int] = so.mapped_column(sa.ForeignKey(User.id))
+    seller: so.Mapped[User] = so.relationship(back_populates='sell_products')
     # time: so.Mapped[datetime] = so.mapped_column(default=lambda: datetime.now())
     price: so.MappedColumn[float]
     users: so.WriteOnlyMapped[User] = so.relationship('User', secondary=user_product, back_populates='user_products')
