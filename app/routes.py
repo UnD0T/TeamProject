@@ -31,7 +31,7 @@ def product_detail(product_id):
 def post_products():
     form=ShopForm()
     print('endpoint')
-    if form.validate_on_submit(): #чомусь у form.photo.data повертається none і тому валідація не проходить
+    if form.validate_on_submit():
         print('validate_on_submit')
         new_product=Products(
             # seller=current_user,  # мені здається що продавця можна і без форми записати
@@ -42,17 +42,6 @@ def post_products():
         )
         print('new product')
         new_product.set_photo_path(form.photo.data) 
-
-        
-        # uploaded_file = form.photo.data
-        # filename = secure_filename(uploaded_file.filename)
-        # post_path = os.path.join(app.config['UPLOAD_PATH'], filename)
-        # uploaded_file.save(post_path)
-        # new_product.photo = post_path
-        # path_list = new_product.photo.split('/')[1:]
-        # new_path = '/'.join(path_list)
-
-        # new_product.photo = new_path
 
         db.session.add(new_product)
         db.session.commit()
@@ -66,14 +55,14 @@ def buy_products(product_id):
     if  not current_user.is_authenticated:
         return redirect(url_for('login'))
     product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
-    user_products = db.session.scalars(current_user.user_products.select().all())
+    user_products = db.session.scalars(current_user.user_products.select()).all()
     
     if product in user_products:
-        return redirect(url_for('products')) # треба буде добавити якесь повідомленнян що цей item вже куплений 
+        return redirect(url_for('home')) # треба буде добавити якесь повідомленнян що цей item вже куплений 
     
     product.users.add(current_user)
     db.session.commit()
-    return redirect(url_for('products'))
+    return redirect(url_for('home'))
 
 
 
@@ -119,5 +108,5 @@ def logout():
 
 @app.route('/profile')
 def profile():
-    products = db.session.scalars(sa.select(Products))
+    products = db.session.scalars(current_user.user_products.select()).all()
     return render_template('profile.html', products=products)
