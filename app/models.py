@@ -1,20 +1,20 @@
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
+from datetime import datetime
+from time import time
 
-from app import db, login, app
+import jwt
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
+from config import Config
+from app import db, login
 import sqlalchemy as sa
 import sqlalchemy.orm as so
-
 from typing import Optional
-from datetime import datetime
-import os
 
 user_product = sa.Table(
     'user_product',
     db.metadata,
     sa.Column('user_id', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
-    sa.Column('product_id', sa.Integer, sa.ForeignKey('products.id'), primary_key=True))
+    sa.Column('product_id', sa.Integer, sa.ForeignKey('product.id'), primary_key=True))
 
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -31,6 +31,18 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def get_token(self, expire_in=600):
+        return jwt.encode({'id': self.id, 'exp': time()+expire_in},
+                          '123456789', algorithm='HS256')
+
+    @staticmethod
+    def verify_token(token):
+        try:
+            id = jwt.decode(token, '123456789', algorithms=['HS256'])['id']
+        except:
+            return
+        return User.query.get_or_404(id)
+
     def __repr__(self):
         return self.username
 
@@ -43,7 +55,6 @@ class Products(db.Model):
     id: so.MappedColumn[int] = so.mapped_column(primary_key=True)
     title: so.MappedColumn[str] = so.mapped_column(sa.String(60))
     description: so.MappedColumn[str]
-    photo: so.MappedColumn[str]
     seller: so.MappedColumn[str] = so.mapped_column(sa.String(60))
     # time: so.Mapped[datetime] = so.mapped_column(default=lambda: datetime.now())
     price: so.MappedColumn[float]
@@ -52,14 +63,4 @@ class Products(db.Model):
     def __repr__(self):
         return f'Products: {self.title}'
 
-
-    def set_photo_path(self, data_in_form):
-        print('set_path')
-        filename = secure_filename(data_in_form.filename)
-        products_path = os.path.join(app.config['UPLOAD_PATH'], filename)
-        data_in_form.save(products_path)
-        self.photo = products_path
-        path_list = products_path.split('/')[1:]
-        new_path = '/'.join(path_list)
-        self.photo = new_path
 

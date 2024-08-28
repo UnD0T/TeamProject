@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, FloatField, DateTimeField, PasswordField
-from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app import db
 import sqlalchemy as sa
@@ -9,9 +8,8 @@ from string import punctuation
 
 
 class ShopForm(FlaskForm):
-    title = StringField('Product name', validators=[DataRequired()])
+    name = StringField('Product name', validators=[DataRequired()])
     description = TextAreaField('Proudct description', validators=[DataRequired()])
-    photo = FileField('Photo', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     seller = StringField('Seller name', validators=[DataRequired()])
     price = FloatField('Product price', validators=[DataRequired()])
     # time = DateTimeField('Time', format='%Y.%m.%d %H:%M', validators=[DataRequired()])
@@ -70,3 +68,13 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Sign in')
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Send email')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirmed_password = PasswordField('Confirm password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset')
