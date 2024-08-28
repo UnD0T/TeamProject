@@ -1,0 +1,21 @@
+body {
+    height: 200vh;
+}
+
+.flash-container {
+    position: fixed; 
+	bottom: 0;
+    width: 100%;
+    /* display: flex;
+    justify-content: center; */
+}
+
+
+.my-flash {
+    /* position: fixed; */
+    text-align: center;
+    width: 300px;
+
+    margin: 18px 40%;
+    margin-right: 150px;
+}

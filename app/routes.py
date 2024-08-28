@@ -1,5 +1,5 @@
 from app import app, db #login  
-from flask import render_template, url_for, request, redirect
+from flask import flash, render_template, url_for, request, redirect
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.utils import secure_filename
 import sqlalchemy as sa
@@ -45,6 +45,7 @@ def post_products():
 
         db.session.add(new_product)
         db.session.commit()
+        flash(message='You successfully post this product', category='success')
         return redirect(url_for('home'))
     return render_template('post_product.html', form=form)
 
@@ -58,10 +59,12 @@ def buy_products(product_id):
     user_products = db.session.scalars(current_user.user_products.select()).all()
     
     if product in user_products:
+        flash(message='You already has bought this product', category='danger')
         return redirect(url_for('home')) # треба буде добавити якесь повідомленнян що цей item вже куплений 
     
     product.users.add(current_user)
     db.session.commit()
+    flash(message='You successfully bought this product', category='success')
     return redirect(url_for('home'))
 
 
