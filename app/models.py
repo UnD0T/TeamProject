@@ -14,7 +14,7 @@ user_product = sa.Table(
     'user_product',
     db.metadata,
     sa.Column('user_id', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
-    sa.Column('product_id', sa.Integer, sa.ForeignKey('products.id'), primary_key=True))
+    sa.Column('product_id', sa.Integer, sa.ForeignKey('product.id'), primary_key=True))
 
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -62,4 +62,3 @@ class Products(db.Model):
         path_list = products_path.split('/')[1:]
         new_path = '/'.join(path_list)
         self.photo = new_path
-

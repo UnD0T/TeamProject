@@ -1,4 +1,8 @@
 import os
+<<<<<<< HEAD
+=======
+from decouple import config
+>>>>>>> parent of 697e2ea (some)
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 

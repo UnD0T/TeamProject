@@ -16,6 +16,7 @@ def home():
     return render_template('index.html', products=products )
 
 
+
 # @app.route('/products')
 # def products_list():
 #     products = db.session.scalars(sa.select(Products))
