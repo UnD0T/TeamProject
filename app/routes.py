@@ -61,12 +61,31 @@ def buy_products(product_id):
     
     if product in user_products:
         flash(message='You already has bought this product', category='danger')
-        return redirect(url_for('home')) # треба буде добавити якесь повідомленнян що цей item вже куплений 
+        return redirect(url_for('home')) 
     
     product.users.add(current_user)
     db.session.commit()
     flash(message='You successfully bought this product', category='success')
     return redirect(url_for('home'))
+
+
+@app.route('/products/<int:product_id>/remove')
+def remove_product(product_id):
+    if  not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
+    user_products = db.session.scalars(current_user.user_products.select()).all()
+
+    if product not in user_products:
+        flash(message="You didn't buy this product", category='danger')
+        return redirect(url_for('home')) 
+    
+    current_user.user_products.delete(product)
+    db.session.commit()
+
+    flash(message='You successfully remove this product', category='success')
+    return redirect(url_for('basket'))
+
 
 
 
@@ -110,7 +129,8 @@ def logout():
 
 # profile
 
-@app.route('/profile')
-def profile():
+@app.route('/basket')
+def basket():
     products = db.session.scalars(current_user.user_products.select()).all()
-    return render_template('profile.html', products=products)
+    return render_template('basket.html', products=products)
+
