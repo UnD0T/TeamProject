@@ -17,6 +17,7 @@
                 <p class="card-text">{{ product.description }}</p>
                 <p class="card-text"><small class="text-body-secondary">{{ product.price}} грн</small></p>
                 </div>
+                <button style="background-color: red; margin-left: 36px ;"><a href="{{ url_for('remove_product', product_id=product.id) }}">REMOVE</a></button>
             </div>
         </div>
     </div>

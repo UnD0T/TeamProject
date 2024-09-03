@@ -1,21 +1,30 @@
 {% extends 'base.html' %}
 
-{% block style %} {% endblock %}
+{% block style %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='/style/style.css') }}">
+{% endblock %}
 
 {% block content %}
 
 <div class="container w-75">
+    <img src="{{ product.photo }}" alt="product image" class="product-image">
+
+    <img src="/static/uploads/ava.jpg" alt="" class="w-75 product-image">
     <h2>{{ product.title }}</h2>
     <p><strong>{{ product.price }}</strong></p>
     <p>{{ product.description }}</p>
-    <p style="color: grey;">{{ product.seller }}</p>
+    <p style="color: grey;">Seller: {{ product.seller }}</p>
+
+    <div class="pop-up" style="display: block;">
+        <span class="pop-up-span"> &times; </span>
+        <img src="/static/uploads/ava.jpg" alt="hgvhg">
+    </div>
 </div>
 
-<!-- <div class="container w-75">
-    <h2>Title</h2>
-    <p><strong>1000</strong></p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <p style="color: grey;">Bob</p>
-</div> -->
 
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='/js/product_detail.js') }}"></script>
 {% endblock %}

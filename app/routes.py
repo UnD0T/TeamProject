@@ -1,5 +1,5 @@
 from app import app, db #login  
-from flask import render_template, url_for, request, redirect
+from flask import render_template, url_for, request, redirect, flash
 from flask_login import login_required, login_user, logout_user, current_user
 import sqlalchemy as sa
 import sqlalchemy.orm as os
@@ -54,7 +54,10 @@ def buy_products(product_id):
     user_products = db.session.scalars(current_user.user_products.select().all())
     
     if product in user_products:
-        return redirect(url_for('products')) # треба буде добавити якесь повідомленнян що цей item вже куплений 
+
+        flash(message='You already has bought this product', category='danger')
+        return redirect(url_for('home')) 
+
     
     product.users.add(current_user)
     db.session.commit()
@@ -96,23 +99,41 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
 
+@app.route('/products/<int:product_id>/remove')
+def remove_product(product_id):
+    if  not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
+    user_products = db.session.scalars(current_user.user_products.select()).all()
+
+    if product not in user_products:
+        flash(message="You didn't buy this product", category='danger')
+        return redirect(url_for('home')) 
+    
+    current_user.user_products.delete(product)
+    db.session.commit()
+
+    flash(message='You successfully remove this product', category='success')
+    return redirect(url_for('basket'))
+
+
+
 
 # registration/login/logout
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        new_user = User(
-            username=form.username.data,
-            email=form.email.data
-        )
-        new_user.set_password(form.password.data) 
-
-        db.session.add(new_user)
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
         db.session.commit()
-        return redirect(url_for('home'))
-    return render_template('register.html', form=form)
+        send_confirmation_email(user)
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -136,6 +157,14 @@ def logout():
 
 # profile
 
+
 @app.route('/profile')
 def profile():
     return render_template('profile.html')
+
+@app.route('/basket')
+def basket():
+    products = db.session.scalars(current_user.user_products.select()).all()
+    return render_template('basket.html', products=products)
+
+
