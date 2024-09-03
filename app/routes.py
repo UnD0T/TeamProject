@@ -12,8 +12,8 @@ from .decorators import admin_required
 
 @app.route('/')
 def home():
-    # products = db.session.scalars(sa.select(Products))
-    return render_template('index.html', )#products=products
+    products = db.session.scalars(sa.select(Products))
+    return render_template('index.html', products=products)
 
 
 @app.route('/products')
@@ -21,10 +21,12 @@ def products_list():
     products = db.session.scalars(sa.select(Products))
     return render_template('products.html', products=products)
 
-@app.route('/products/<int:id>')
-def product_detail(id):
-    # product = db.session.scalar(sa.select(Products).where(Products.id == id))
-    return render_template('product_detail.html') #product=product
+
+@app.route('/products/<int:product_id>')
+def product_detail(product_id):
+    product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
+    return render_template('product_detail.html', product=product) 
+
 
 # post_products
 @app.route('/products/post', methods=['GET', 'POST'])
@@ -38,10 +40,10 @@ def post_products():
             seller=form.seller.data,
             price=form.price.data
         )
-
+        new_product.set_photo_path(form.photo.data)
         db.session.add(new_product)
         db.session.commit()
-        return redirect(url_for('products'))
+        return redirect(url_for('home'))
     return render_template('post_product.html', form=form)
 
 
@@ -109,7 +111,6 @@ def registration():
 
         db.session.add(new_user)
         db.session.commit()
-        login_user()
         return redirect(url_for('home'))
     return render_template('register.html', form=form)
 
@@ -118,10 +119,10 @@ def registration():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = db.session.scalar(sa.select(User).where(User.username == form.username.data))
+        user = db.session.scalar(sa.select(User).where(User.email == form.email.data))
         if not user or not user.check_password(form.password.data):
             return redirect(url_for('login'))
-        login_user()
+        login_user(user)
         return redirect(url_for('home'))
     return render_template('login.html', form=form)
 

@@ -12,3 +12,4 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = config('MAIL_USERNAME')
     MAIL_PASSWORD = config('MAIL_PASSWORD')
+    UPLOAD_PATH = os.environ.get('UPLOAD_PATH')

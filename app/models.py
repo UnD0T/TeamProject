@@ -1,11 +1,14 @@
+import os
 from datetime import datetime
 from time import time
 
 import jwt
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
+
 from config import Config
-from app import db, login
+from app import db, login, app
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from typing import Optional
@@ -14,7 +17,7 @@ user_product = sa.Table(
     'user_product',
     db.metadata,
     sa.Column('user_id', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
-    sa.Column('product_id', sa.Integer, sa.ForeignKey('product.id'), primary_key=True))
+    sa.Column('product_id', sa.Integer, sa.ForeignKey('products.id'), primary_key=True))
 
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -63,4 +66,15 @@ class Products(db.Model):
     def __repr__(self):
         return f'Products: {self.title}'
 
+
+
+    def set_photo_path(self, data_in_form):
+        print('set_path')
+        filename = secure_filename(data_in_form.filename)
+        products_path = os.path.join(app.config['UPLOAD_PATH'], filename)
+        data_in_form.save(products_path)
+        self.photo = products_path
+        path_list = products_path.split('/')[1:]
+        new_path = '/'.join(path_list)
+        self.photo = new_path
 

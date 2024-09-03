@@ -1,1 +1,10 @@
-cd
+<html lang="en">
+<body>
+<h1>Hello</h1>
+<h3>Please confirm your email:
+    <a href="{{ url_for('confirm_email', token=token, _external=True) }}">
+        link
+    </a>
+</h3>
+</body>
+</html>
