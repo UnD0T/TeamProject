@@ -51,7 +51,7 @@ def post_products():
 @app.route('/products/<int:product_id>/buy')
 def buy_products(product_id):
     product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
-    user_products = db.session.scalars(current_user.user_products.select().all())
+    user_products = db.session.scalars(current_user.user_products.select()).all()
     
     if product in user_products:
 
@@ -61,7 +61,8 @@ def buy_products(product_id):
     
     product.users.add(current_user)
     db.session.commit()
-    return redirect(url_for('products'))
+    flash(message='You successfully  bought this product', category='success')
+    return redirect(url_for('home'))
 
 #confirm_mail
 @app.route('/confirm-email/<token>')
@@ -110,7 +111,7 @@ def remove_product(product_id):
         flash(message="You didn't buy this product", category='danger')
         return redirect(url_for('home')) 
     
-    current_user.user_products.delete(product)
+    db.session.delete( current_user.user_products.product)
     db.session.commit()
 
     flash(message='You successfully remove this product', category='success')
@@ -155,16 +156,10 @@ def logout():
     return redirect(url_for('home'))
 
 
-# profile
-
-
-@app.route('/profile')
-def profile():
-    return render_template('profile.html')
-
-@app.route('/basket')
-def basket():
+# shopping_cart
+@app.route('/shoppingcart')
+def shopping_cart():
     products = db.session.scalars(current_user.user_products.select()).all()
-    return render_template('basket.html', products=products)
+    return render_template('shopping_cart.html', products=products)
 
 

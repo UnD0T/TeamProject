@@ -59,6 +59,7 @@ class Products(db.Model):
     title: so.MappedColumn[str] = so.mapped_column(sa.String(60))
     description: so.MappedColumn[str]
     seller: so.MappedColumn[str] = so.mapped_column(sa.String(60))
+    photo: so.MappedColumn[str]
     # time: so.Mapped[datetime] = so.mapped_column(default=lambda: datetime.now())
     price: so.MappedColumn[float]
     users: so.WriteOnlyMapped[User] = so.relationship('User', secondary=user_product, back_populates='user_products')
