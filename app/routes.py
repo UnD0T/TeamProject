@@ -70,7 +70,7 @@ def confirm_email(token):
     user = User.verify_token(token) # USER or None
     if not user:
         return '<h1>Cannot confirm your email</h1>'
-    user.is_active = True
+    user.is_admin = True
     db.session.commit()
     return '<h1>You have confirmed your email successfully</h1>'
 
