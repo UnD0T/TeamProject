@@ -10,7 +10,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='img/BG.jpg') }}">
     {% block style0 %} {% endblock %}
      <style>
-
+        body {
+            background-image: url('{{ url_for('static', filename='img/BG.jpg') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body class="bg-success --bs-light-text-emphasis">
@@ -39,7 +47,7 @@
                         <a class="nav-link" href="{{ url_for('logout') }}">LOGOUT</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('shopping_cart') }}">BASKET</a>
+                        <a class="nav-link" href="{{ url_for('shopping_cart') }}">CART</a>
                     </li>
                     {% else %}
                     <li class="nav-item">

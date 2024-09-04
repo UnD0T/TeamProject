@@ -19,6 +19,7 @@ user_product = sa.Table(
     sa.Column('user_id', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
     sa.Column('product_id', sa.Integer, sa.ForeignKey('products.id'), primary_key=True))
 
+
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), unique=True, index=True)
@@ -62,7 +63,7 @@ class Products(db.Model):
     photo: so.MappedColumn[str]
     # time: so.Mapped[datetime] = so.mapped_column(default=lambda: datetime.now())
     price: so.MappedColumn[float]
-    users: so.WriteOnlyMapped[User] = so.relationship('User', secondary=user_product, back_populates='user_products')
+    users: so.WriteOnlyMapped[User] = so.relationship('User', secondary=user_product, back_populates='user_products', passive_deletes=True)
 
     def __repr__(self):
         return f'Products: {self.title}'

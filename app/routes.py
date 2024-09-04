@@ -4,7 +4,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 import sqlalchemy as sa
 import sqlalchemy.orm as os
 
-from .models import User, Products
+from .models import User, Products, user_product
 from .forms import RegistrationForm, LoginForm, ShopForm, ResetPasswordRequestForm, ResetPasswordForm
 from .send_mail import send_confirmation_email, send_reset_password_email
 from .decorators import admin_required
@@ -86,6 +86,7 @@ def reset_password_request():
             send_reset_password_email(user)
     return render_template('reset_password_request.html', form=form)
 
+
 @app.route('/reset-password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
@@ -100,24 +101,17 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
 
+
 @app.route('/products/<int:product_id>/remove')
 def remove_product(product_id):
     if  not current_user.is_authenticated:
         return redirect(url_for('login'))
-    product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
-    user_products = db.session.scalars(current_user.user_products.select()).all()
 
-    if product not in user_products:
-        flash(message="You didn't buy this product", category='danger')
-        return redirect(url_for('home')) 
-    
-    db.session.delete( current_user.user_products.product)
+    db.session.query(user_product).filter(user_product.c.user_id == current_user.id).filter(user_product.c.product_id == product_id).delete()
     db.session.commit()
 
     flash(message='You successfully remove this product', category='success')
-    return redirect(url_for('basket'))
-
-
+    return redirect(url_for('home'))
 
 
 # registration/login/logout
