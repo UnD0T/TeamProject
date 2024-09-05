@@ -7,7 +7,7 @@
 {% block content %}
 
 
-
+<div class="container w-50 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color black;" >
 <form method="post" class="container w-50" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <h2 class="text-center mb-5"> Post product</h2>
@@ -55,5 +55,5 @@
         {{ form.submit(class='my-button btn btn-primary ') }}
     </div>
 </form>
-
+</div>
 {% endblock %}

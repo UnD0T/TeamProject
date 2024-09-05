@@ -18,12 +18,11 @@ def send_confirmation_email(user):
 
 def send_reset_password_email(user):
     token = user.get_token()
+    print(token)
     message = Message(
         'Reset your password',
         sender='noreply@example.com',
         recipients=[user.email],
     )
-    message.body = f'''To reset your password visit the following link:
-    {url_for('reset_password', token=token, _external=True)}
-    '''
+    message.html = render_template('reset_password_template.html', token=token)
     mail.send(message)
