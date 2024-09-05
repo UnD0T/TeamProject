@@ -5,6 +5,11 @@ img {
     object-fit: contain;
 }
 
+a {
+    color: black;
+    text-decoration: none;
+}
+
 .flash-container {
     position: fixed; 
 	bottom: 0;
