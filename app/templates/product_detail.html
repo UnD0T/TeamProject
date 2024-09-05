@@ -1,25 +1,24 @@
 {% extends 'base.html' %}
 
 {% block style %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
-<!-- <link rel="stylesheet" href="/app/static/style/style.css"> -->
+<link rel="stylesheet" href="{{ url_for('static', filename='/style/style.css') }}">
 {% endblock %}
 
 {% block content %}
 
-<div class="container w-75">
-    <!-- <img src="{{ product.photo }}" alt="product image" class="product-image"> -->
+<div class="container w-35 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
+    <img src="{{ product.photo }}" alt="product image" class="product-image">
 
-    <img src="/static/uploads/ava.jpg" alt="" class="w-25 product-image">
+    <!-- <img src="/static/uploads/ava.jpg" alt="" class="w-75 product-image"> -->
     <h2>{{ product.title }}</h2>
     <p><strong>{{ product.price }}</strong></p>
     <p>{{ product.description }}</p>
     <p style="color: grey;">Seller: {{ product.seller }}</p>
 
-    <div class="pop-up" id="pop-up" style="display: none;">
+    <!-- <div class="pop-up" style="display: block;">
         <span class="pop-up-span"> &times; </span>
         <img src="/static/uploads/ava.jpg" alt="hgvhg">
-    </div>
+    </div> -->
 </div>
 
 
@@ -27,5 +26,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='js/product_detail.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/product_detail.js') }}"></script>
 {% endblock %}
