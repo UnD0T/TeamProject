@@ -7,18 +7,18 @@
 {% block content %}
 
 <div class="container w-35 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
-    <img src="{{ product.photo }}" alt="product image" class="product-image">
+    <!-- <img src="{{ product.photo }}" alt="product image" class="product-image"> -->
 
-    <!-- <img src="/static/uploads/ava.jpg" alt="" class="w-75 product-image"> -->
+    <img src="/static/uploads/ava.jpg" id="product-image" alt="" class="w-75 product-image">
     <h2>{{ product.title }}</h2>
     <p><strong>{{ product.price }}</strong></p>
     <p>{{ product.description }}</p>
     <p style="color: grey;">Seller: {{ product.seller }}</p>
 
-    <!-- <div class="pop-up" style="display: block;">
+    <div class="pop-up" id="pop-up" style="display: none;">
         <span class="pop-up-span"> &times; </span>
         <img src="/static/uploads/ava.jpg" alt="hgvhg">
-    </div> -->
+    </div>
 </div>
 
 

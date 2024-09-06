@@ -111,7 +111,7 @@ def remove_product(product_id):
     db.session.commit()
 
     flash(message='You successfully remove this product', category='success')
-    return redirect(url_for('home'))
+    return redirect(url_for('shopping_cart'))
 
 
 # registration/login/logout

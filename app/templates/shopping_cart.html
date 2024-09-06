@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <div class="container w-25 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
@@ -26,4 +30,15 @@
     {% endfor %}
 </div>
 </div>
+
+
+{% for category, message in get_flashed_messages(True)  %}
+<div class="flash-container">
+  <div class="my-flash alert alert-{{category}} alert-dismissible fade show " role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+{% endfor %}
+
 {% endblock %}
