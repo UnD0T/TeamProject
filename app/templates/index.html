@@ -8,30 +8,29 @@
 {% block content %}
 
 
-<div class="container w-75 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
+<div class="container w-80 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
   <h1>PRODUCTS YOU CAN BUY</h1>
 
   <div class="row row-cols-2 d-flex justify-content-between">
 
     {% for product in products %}
-      <div class="card col shadow-sm mb-3" style="max-width: 650px; padding: 12px;">
-          <div class="row g-0" >
-              <a href="{{ url_for('product_detail', product_id=product.id) }}"> 
-              <div class="col-md-4">
-                  <img src="{{ product.photo }}" class="img-fluid rounded-start" alt="{{ product.title }}">
-              </div>
-              <div class="col-md-8">
-                  <div class="card-body">
-                  <h5 class="card-title">{{ product.title }}</h5>
-                  <p class="card-text">{{ product.description }}</p>
-                  <p class="card-text"><small class="text-body-secondary">{{ product.price}} грн</small></p>
-                  </div>
-                  <button style="background-color: red; margin-left: 36px ;"><a href="{{ url_for('buy_products', product_id=product.id) }}">Add to cart</a></button>
-              </div>
-              </a>
+
+      <div class="card col shadow-sm mb-3 my-shadow" style="width: 18rem;">
+        <div class="row g-0" >
+          <a href="{{ url_for('buy_products', product_id=product.id) }}">
+          <img src="{{ product.photo }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="card-text"><small class="text-body-secondary">{{ product.price}} грн</small></p>
+          </a>
+           
+            <button class="my-button"> <a href="{{ url_for('buy_products', product_id=product.id) }}" class="my-button">ADD TO CART</a></button>
           </div>
+        </div>
       </div>
-    
+      
+     
     {% endfor %}
 
   </div>
@@ -45,5 +44,4 @@
   </div>
 </div>
 {% endfor %}
-
 {% endblock %}
