@@ -10,6 +10,14 @@ a {
     text-decoration: none;
 }
 
+.container {
+    padding: 24px;
+}
+
+.row {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .flash-container {
     position: fixed; 
 	bottom: 0;
@@ -63,4 +71,21 @@ a {
     line-height: 40px;
     cursor: pointer;
     border-radius: 50%;
+}
+
+
+.my-button {
+    border-color: #000;
+    border-radius: 12px;
+    padding: 15px 30px;
+    margin: 0 auto;
+    background-color: #d2cdcd;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.8s ease;
+}
+
+.my-button:hover {
+    background-color: #9d9595;
+    color: #2b2929;;
 }
