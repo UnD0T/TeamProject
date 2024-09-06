@@ -156,4 +156,8 @@ def shopping_cart():
     products = db.session.scalars(current_user.user_products.select()).all()
     return render_template('shopping_cart.html', products=products)
 
+@app.route('/info')
+def info():
+    return render_template('info.html')
+
 
