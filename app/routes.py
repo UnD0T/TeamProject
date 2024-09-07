@@ -12,7 +12,8 @@ from .decorators import admin_required
 
 @app.route('/')
 def home():
-    products = db.session.scalars(sa.select(Products))
+    # products = db.session.scalars(sa.select(Products))
+    products = db.paginate(sa.select(Products), per_page=3)
     return render_template('index.html', products=products)
 
 
@@ -26,6 +27,18 @@ def products_list():
 def product_detail(product_id):
     product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
     return render_template('product_detail.html', product=product) 
+
+
+@app.route('/products/<int:product_id>/remove')
+def remove_product(product_id):
+    if  not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    db.session.query(user_product).filter(user_product.c.user_id == current_user.id).filter(user_product.c.product_id == product_id).delete()
+    db.session.commit()
+
+    flash(message='You successfully remove this product', category='success')
+    return redirect(url_for('shopping_cart'))
 
 
 # post_products
@@ -102,16 +115,7 @@ def reset_password(token):
     return render_template('reset_password.html', form=form)
 
 
-@app.route('/products/<int:product_id>/remove')
-def remove_product(product_id):
-    if  not current_user.is_authenticated:
-        return redirect(url_for('login'))
 
-    db.session.query(user_product).filter(user_product.c.user_id == current_user.id).filter(user_product.c.product_id == product_id).delete()
-    db.session.commit()
-
-    flash(message='You successfully remove this product', category='success')
-    return redirect(url_for('shopping_cart'))
 
 
 # registration/login/logout
