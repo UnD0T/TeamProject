@@ -1,0 +1,9 @@
+.my-container {
+    display: flex;
+}
+
+
+.product-info {
+    margin: 18px;
+    margin-left: 36px;
+}

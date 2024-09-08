@@ -13,7 +13,7 @@ from .decorators import admin_required
 @app.route('/')
 def home():
     # products = db.session.scalars(sa.select(Products))
-    products = db.paginate(sa.select(Products), per_page=3)
+    products = db.paginate(sa.select(Products), per_page=6)
     return render_template('index.html', products=products)
 
 
