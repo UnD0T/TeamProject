@@ -47,10 +47,10 @@ def post_products():
     form=ShopForm()
     if form.validate_on_submit():
         new_product=Products(
-            # seller=current_user,  # мені здається що продавця можна і без форми записати
+            seller=current_user,  # мені здається що продавця можна і без форми записати
             title=form.title.data,
             description=form.description.data,
-            seller=form.seller.data,
+            # seller=form.seller.data,
             price=form.price.data
         )
         new_product.set_photo_path(form.photo.data)

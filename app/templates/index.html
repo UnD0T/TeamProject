@@ -16,7 +16,6 @@
     {% for product in products %}
 
       <div class="card col  my-shadow mb-3" style="width: 18rem;">
-        <!-- <div class="row g-0 my-shadow" > -->
           <a href="{{ url_for('product_detail', product_id=product.id) }}">
           <img src="{{ product.photo }}" class="card-img-top" alt="...">
           <div class="card-body">
@@ -26,7 +25,6 @@
            
             <button class="my-button"> <a href="{{ url_for('buy_products', product_id=product.id) }}" class="my-button">ADD TO CART</a></button>
           </div>
-        <!-- </div> -->
       </div>
       
      
