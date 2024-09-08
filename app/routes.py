@@ -164,4 +164,41 @@ def shopping_cart():
 def info():
     return render_template('info.html')
 
+#profile
 
+@app.route('/for-sale')
+def products_for_sale():
+    products = db.session.scalars(sa.select(Products).where(Products.seller == current_user))
+    return render_template('profile.html', products=products)
+
+
+@app.route('/products/<int:product_id>/delete')
+def product_delete(product_id):
+    product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
+
+    if not product.seller == current_user:
+        return redirect(url_for('home'))
+    
+    db.session.delete(product)
+    db.session.commit()
+    flash(message='You successfully delete this product', category='success')
+    return redirect(url_for('home'))
+
+@app.route('/products/<int:product_id>/edit', methods=['GET', 'POST'])
+def product_edit(product_id):
+    product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
+
+    if not product.seller == current_user:
+        return redirect(url_for('home'))
+    
+    form = ShopForm(obj=product)
+    if form.validate_on_submit():
+        product.title = form.title.data
+        product.description = form.description.data
+        product.price = form.price.data
+        product.set_photo_path(form.photo.data)
+
+        db.session.commit()
+        flash(message='You successfully edit this product', category='success')
+        return redirect(url_for('products_for_sale'))
+    return render_template('post_product.html', form=form)

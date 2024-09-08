@@ -78,6 +78,9 @@ a {
     border-radius: 50%;
 }
 
+.buttons {
+    display: flex;
+}
 
 .my-button {
     border-color: #000;
@@ -92,8 +95,26 @@ a {
 
 .my-button:hover {
     background-color: #9d9595;
-    color: #2b2929;;
+    color: #2b2929;
 }
+
+.my-button-setting {
+    border-color: #000;
+    border-radius: 12px;
+    padding: 8px 8px;
+    width: 88px;
+    margin: 8px auto;
+    background-color: #d2cdcd;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.8s ease;
+}
+
+.my-button-setting:hover {
+    background-color: #9d9595;
+    color: #2b2929;
+}
+
 
 .pagination-container {
     display: flex;
