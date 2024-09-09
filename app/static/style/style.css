@@ -19,6 +19,15 @@ a {
     height: 100%;
 }
 
+.card-img-top {
+    width: 264px;
+    height: 264px;
+}
+
+.card-body {
+    margin-bottom: 12px;
+}
+
 .my-shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

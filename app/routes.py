@@ -7,7 +7,7 @@ import sqlalchemy.orm as os
 from .models import User, Products, user_product
 from .forms import RegistrationForm, LoginForm, ShopForm, ResetPasswordRequestForm, ResetPasswordForm
 from .send_mail import send_confirmation_email, send_reset_password_email
-from .decorators import admin_required
+
 
 
 @app.route('/')
@@ -44,6 +44,8 @@ def remove_product(product_id):
 # post_products
 @app.route('/products/post', methods=['GET', 'POST'])
 def post_products():
+    if  not current_user.is_authenticated:
+        return redirect(url_for('login'))
     form=ShopForm()
     if form.validate_on_submit():
         new_product=Products(
@@ -63,6 +65,8 @@ def post_products():
 #buy_product
 @app.route('/products/<int:product_id>/buy')
 def buy_products(product_id):
+    if  not current_user.is_authenticated:
+        return redirect(url_for('login'))
     product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
     user_products = db.session.scalars(current_user.user_products.select()).all()
     
@@ -156,7 +160,9 @@ def logout():
 
 # shopping_cart
 @app.route('/shoppingcart')
+@login_required
 def shopping_cart():
+
     products = db.session.scalars(current_user.user_products.select()).all()
     return render_template('shopping_cart.html', products=products)
 
@@ -167,6 +173,7 @@ def info():
 #profile
 
 @app.route('/for-sale')
+@login_required
 def products_for_sale():
     products = db.session.scalars(sa.select(Products).where(Products.seller == current_user))
     return render_template('profile.html', products=products)
