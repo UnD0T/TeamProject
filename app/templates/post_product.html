@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='/style/post_product.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style/style.css')}}">
 {% endblock %}
 
 {% block content %}
 
 
-<div class="container w-50 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
+<div class="container w-75 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
 <form method="post" class="container w-50" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <h2 class="text-center mb-5"> Post product</h2>
@@ -45,8 +45,9 @@
     </div>
     
     <div class="col-12">
-        {{ form.submit(class='my-button btn btn-primary ') }}
+        {{ form.submit(class='btn btn-primary ') }}
     </div>
 </form>
 </div>
 {% endblock %}
+

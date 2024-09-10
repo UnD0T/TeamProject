@@ -8,9 +8,8 @@
 {% block content %}
 
 <div class="container w-35 mt-3 my-container" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
-    <!-- <img src="{{ product.photo }}" alt="product image" class="product-image"> -->
+    <img src="{{ url_for('static', filename=product.photo) }}" alt="product image" class="product-image" style="width: 500px; height: 500px;">
 
-    <img src="/static/uploads/ava.jpg" id="product-image" alt="" class="product-image">
     <div class="product-info">
         <h2>{{ product.title }}</h2>
         <p><strong>{{ product.price }}</strong></p>
@@ -20,7 +19,7 @@
 
     <div class="pop-up" id="pop-up">
         <span class="pop-up-span"> &times; </span>
-        <img src="/static/uploads/ava.jpg" alt="hgvhg">
+        <img src="{{ url_for('static', filename=product.photo) }}" alt="product image" class="product-image">
     </div>
 </div>
 

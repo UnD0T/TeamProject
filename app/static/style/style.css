@@ -104,7 +104,10 @@ a {
 
 .my-button:hover {
     background-color: #9d9595;
-    color: #2b2929;
+}
+
+.my-button-a:hover {
+    color: #000;
 }
 
 .my-button-setting {

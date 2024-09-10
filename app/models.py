@@ -74,12 +74,12 @@ class Products(db.Model):
 
 
     def set_photo_path(self, data_in_form):
-        print('set_path')
         filename = secure_filename(data_in_form.filename)
         products_path = os.path.join(app.config['UPLOAD_PATH'], filename)
         data_in_form.save(products_path)
-        self.photo = products_path
-        path_list = products_path.split('/')[1:]
-        new_path = '/'.join(path_list)
-        self.photo = new_path
+        relative_path = os.path.join('uploads', filename).replace('\\', '/')
+        self.photo = relative_path
+        # path_list = products_path.split('/')[1:]
+        # new_path = '/'.join(path_list)
+        # self.photo = new_path
 

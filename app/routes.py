@@ -26,6 +26,7 @@ def products_list():
 @app.route('/products/<int:product_id>')
 def product_detail(product_id):
     product = db.session.scalar(sa.select(Products).where(Products.id == product_id))
+    print(product.photo)
     return render_template('product_detail.html', product=product) 
 
 

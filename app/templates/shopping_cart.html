@@ -14,17 +14,16 @@
 
         {% for product in products %}
 
-        <div class="card col my-shadow mb-3" style="width: 18rem;">
+        <div class="card col my-shadow mb-3" style="width: 18rem; height: 500px;">
             <a href="{{ url_for('product_detail', product_id=product.id) }}">
-            <img src="{{ product.photo }}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">{{ product.title }}</h5>
-              <p class="card-text">{{ product.description }}</p>
-              <p class="card-text "><small class="text-body-secondary">{{ product.price}} грн</small></p>
-              </a>
-
-              <button class="my-button"> <a href="{{ url_for('remove_product', product_id=product.id) }}" class="my-button">REMOVE</a></button>
-            </div>
+              <img src="{{ url_for('static', filename=product.photo) }}" alt="product image" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{ product.title }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text "><small class="text-body-secondary">{{ product.price}} грн</small></p>
+              </div>
+            </a>
+            <button class="my-button"> <a href="{{ url_for('remove_product', product_id=product.id) }}" class="my-button-a">REMOVE</a></button>
         </div>
         
     

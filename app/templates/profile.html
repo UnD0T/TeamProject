@@ -14,19 +14,20 @@
 
         {% for product in products %}
 
-        <div class="card col mb-3 my-shadow" style="width: 18rem;">
+        <div class="card col mb-3 my-shadow" style="width: 18rem; height: 500px;">
             <a href="{{ url_for('product_detail', product_id=product.id) }}">
-            <img src="{{ product.photo }}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">{{ product.title }}</h5>
-                <p class="card-text">{{ product.description }}</p>
-                <p class="card-text"><small class="text-body-secondary">{{ product.price}} грн</small></p>
-                </a>
-                <div class="buttons">
-                    <button class="my-button-setting"> <a href="{{ url_for('product_delete', product_id=product.id) }}" class="my-button-setting">DELETE</a></button>
-                    <button class="my-button-setting"> <a href="{{ url_for('product_edit', product_id=product.id) }}" class="my-button-setting">EDIT</a></button>
+                <img src="{{ url_for('static', filename=product.photo) }}" alt="product image" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text"><small class="text-body-secondary">{{ product.price}} грн</small></p>
                 </div>
+            </a>
+            <div class="buttons">
+                <button class="my-button-setting"> <a href="{{ url_for('product_delete', product_id=product.id) }}" class="my-button-a">DELETE</a></button>
+                <button class="my-button-setting"> <a href="{{ url_for('product_edit', product_id=product.id) }}" class="my-button-a">EDIT</a></button>
             </div>
+            
         </div>
         
     
