@@ -15,10 +15,11 @@
         <p><strong>{{ product.price }}</strong></p>
         <p>{{ product.description }}</p>
         <p style="color: grey;">Seller: {{ product.seller }}</p>
+        <button class="my-button"> <a href="{{ url_for('buy_products', product_id=product.id) }}" class="my-button-a">ADD TO CART</a></button>
     </div>
 
     <div class="pop-up" id="pop-up">
-        <span class="pop-up-span"> &times; </span>
+        <span class="pop-up-span"></span>
         <img src="{{ url_for('static', filename=product.photo) }}" alt="product image" class="product-image">
     </div>
 </div>

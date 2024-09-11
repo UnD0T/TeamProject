@@ -8,9 +8,9 @@
 
 
 <div class="container w-75 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
-<form method="post" class="container w-50" enctype="multipart/form-data">
+<form method="post" class="container" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-    <h2 class="text-center mb-5"> Post product</h2>
+    <h2 class="text-center mb-5"> {{ title }} product</h2>
 
     <div class="mb-3 row">
         {{ form.title.label(class='col-sm-2 col-form-label') }}
@@ -22,7 +22,7 @@
     <div class="mb-3 row">
         {{ form.description.label(class='col-sm-2 col-form-label') }}
         <div class="col-sm-10">
-            {{ form.description(class="form-control")}}   
+            {{ form.description(class="form-control", rows='10')}}   
         </div>
     </div>
 

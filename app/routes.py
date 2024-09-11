@@ -60,7 +60,7 @@ def post_products():
         db.session.add(new_product)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('post_product.html', form=form)
+    return render_template('post_product.html', form=form, title='Post')
 
 
 #buy_product
@@ -176,7 +176,7 @@ def info():
 @app.route('/for-sale')
 @login_required
 def products_for_sale():
-    products = db.session.scalars(sa.select(Products).where(Products.seller == current_user))
+    products = db.session.scalars(sa.select(Products).where(Products.seller == current_user)).all()
     return render_template('profile.html', products=products)
 
 
@@ -200,6 +200,7 @@ def product_edit(product_id):
         return redirect(url_for('home'))
     
     form = ShopForm(obj=product)
+    form.submit.label.text = 'Edit'
     if form.validate_on_submit():
         product.title = form.title.data
         product.description = form.description.data
@@ -209,4 +210,4 @@ def product_edit(product_id):
         db.session.commit()
         flash(message='You successfully edit this product', category='success')
         return redirect(url_for('products_for_sale'))
-    return render_template('post_product.html', form=form)
+    return render_template('post_product.html', form=form, title='Edit')

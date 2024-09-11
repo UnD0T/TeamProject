@@ -73,18 +73,39 @@ a {
 
 
 .container .pop-up span {
-    position: fixed;
+    position: absolute;
     top: 10px;
     right: 20px;
     height: 40px;
     width: 40px;
     background-color: #fff;
     font-size: 50px;
-    font-weight: 900;
+    font-weight: 800;
     text-align: center;
     line-height: 40px;
     cursor: pointer;
     border-radius: 50%;
+}
+
+
+.container .pop-up span::before,
+.container .pop-up span::after {
+	content: '';
+	position: absolute;
+	top: 19px;
+    right: 9px;
+	display: block;
+	width: 24px;
+	height: 3px;
+	background: #000;
+}
+
+.container .pop-up span::before {
+	transform: rotate(45deg);
+}
+
+.container .pop-up span::after {
+	transform: rotate(-45deg);
 }
 
 .buttons {

@@ -7,19 +7,17 @@
 {% block content %}
 
 <div class="container w-75 mt-3" style="background-color: rgba(255, 255, 255, 0.7); border-radius:35px; color: black;" >
-
+    {% if products %}
     <h2 class="text-center mb-5">Your products for sale</h2>
 
     <div class="row row-cols-2 d-flex justify-content-between">
-
         {% for product in products %}
-
-        <div class="card col mb-3 my-shadow" style="width: 18rem; height: 500px;">
+        <div class="card col mb-3 my-shadow" style="width: 18rem; height: 530px;">
             <a href="{{ url_for('product_detail', product_id=product.id) }}">
                 <img src="{{ url_for('static', filename=product.photo) }}" alt="product image" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.title }}</h5>
-                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">{{ product.description|truncate(50) }}</p>
                     <p class="card-text"><small class="text-body-secondary">{{ product.price}} грн</small></p>
                 </div>
             </a>
@@ -27,12 +25,15 @@
                 <button class="my-button-setting"> <a href="{{ url_for('product_delete', product_id=product.id) }}" class="my-button-a">DELETE</a></button>
                 <button class="my-button-setting"> <a href="{{ url_for('product_edit', product_id=product.id) }}" class="my-button-a">EDIT</a></button>
             </div>
-            
         </div>
-        
-    
     {% endfor %}
     </div>
+
+    {% else %}
+    <div style="display: flex; justify-content: center;">
+      <h3 style="margin: 0 auto;">You haven't added any products yet</h3>
+    </div>
+    {% endif %}
 </div>
 
 

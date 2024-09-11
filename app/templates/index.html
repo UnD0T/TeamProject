@@ -11,12 +11,9 @@
   <h1 class="mb-5" style="text-align: center;">PRODUCTS YOU CAN BUY</h1>
 
   <div class="row row-cols-3 d-flex justify-content-between">
-
     {% for product in products %}
-
       <div class="card col  my-shadow mb-5" style="width: 18rem; height: 470px;">
           <a href="{{ url_for('product_detail', product_id=product.id) }}" >
-            <!-- <img src="{{ product.photo }}" class="card-img-top" alt="..."> -->
             <img src="{{ url_for('static', filename=product.photo) }}" alt="product image" class="card-img-top">
             <div class="card-body mb-3">
               <h5 class="card-title">{{ product.title }}</h5>
@@ -24,13 +21,9 @@
             </div>
           </a>
            
-            <button class="my-button"> <a href="{{ url_for('buy_products', product_id=product.id) }}" class="my-button-a">ADD TO CART</a></button>
-
+          <button class="my-button"> <a href="{{ url_for('buy_products', product_id=product.id) }}" class="my-button-a">ADD TO CART</a></button>
       </div>
-      
-     
     {% endfor %}
-
   </div>
 
   <nav aria-label="..." class="pagination-container">
@@ -58,8 +51,6 @@
     </ul>
   </nav>
 </div>
-
-
 
 {% for category, message in get_flashed_messages(True)  %}
 <div class="flash-container">

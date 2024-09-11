@@ -50,6 +50,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('products_for_sale') }}">My product</a>
                     </li>
+                    <li class="nav-item navbar-text" style="margin-left: 36px;">
+                        User:<b> {{ current_user.username }}</b>
+                    </li>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('login') }}">LOGIN</a>
